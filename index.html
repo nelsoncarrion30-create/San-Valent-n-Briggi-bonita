@@ -9,63 +9,271 @@
 
 body{
 margin:0;
-font-family:Arial;
-background:black;
+font-family:'Segoe UI', sans-serif;
+background:linear-gradient(135deg,#000000,#1a0015,#000000);
 color:white;
-text-align:center;
+overflow:hidden;
 }
+
+/* ESTRELLAS */
+
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background-image:radial-gradient(white 1px, transparent 1px);
+background-size:50px 50px;
+animation: estrellas 80s linear infinite;
+opacity:0.2;
+}
+
+@keyframes estrellas{
+from{transform:translate(0,0);}
+to{transform:translate(-500px,-500px);}
+}
+
+/* INICIO */
+
+.inicio{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-size:24px;
+text-align:center;
+cursor:pointer;
+z-index:10;
+}
+
+/* INTRO */
+
+.intro{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:30px;
+font-size:22px;
+opacity:0;
+}
+
+/* TARJETA */
 
 .card{
-margin-top:30px;
-padding:15px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.8);
+width:92%;
+max-width:380px;
+background:rgba(255,255,255,0.95);
+border-radius:25px;
+padding:18px;
+text-align:center;
+color:black;
+opacity:0;
+transition:1s;
+box-shadow:0 0 25px rgba(255,0,80,0.4);
 }
 
-img{
-width:90%;
-max-width:350px;
-border-radius:15px;
-margin:10px 0;
+/* GALERÍA */
+
+.galeria{
+position:relative;
+height:250px;
+border-radius:20px;
+overflow:hidden;
 }
+
+.galeria img{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transform:scale(1.1);
+transition:opacity 2s, transform 4s;
+}
+
+.galeria img.activa{
+opacity:1;
+transform:scale(1);
+}
+
+/* BOTONES */
 
 button{
-padding:12px 25px;
+padding:12px 28px;
+margin:8px;
 border:none;
-border-radius:25px;
-background:#ff4d6d;
+border-radius:30px;
+background:linear-gradient(45deg,#ff2d75,#ff6a8f);
 color:white;
 font-size:16px;
-margin:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+/* MENSAJE FINAL */
+
+#mensajeFinal{
+opacity:0;
+margin-top:15px;
+font-size:18px;
+line-height:1.5;
+min-height:200px;
+}
+
+/* CORAZONES */
+
+.corazon{
+position:absolute;
+animation: flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
 }
 
 </style>
 </head>
 
-<body onclick="playMusic()">
-
-<h2>❤️ Briggi Mi Amor ❤️</h2>
+<body>
 
 <audio id="musica" loop>
-<source src="./nina_bonita.mp3" type="audio/mpeg">
+<source src="nina_bonita.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
+<div class="inicio" onclick="iniciar()">
+❤️ Briggi Mi Amor ❤️ <br><br>
+Toca la pantalla para comenzar nuestra historia...
+</div>
 
-<img src="./foto1.jpg">
-<img src="./foto2.jpg">
-<img src="./foto3.jpg">
-<img src="./foto4.jpg">
-<img src="./foto5.jpg">
+<div class="intro" id="intro">
+Hace 2 años y 5 meses comenzó nuestra historia...<br><br>
+Desde ese momento supe que quería compartir cada momento contigo 💕
+</div>
 
-<h3>¿Quieres ser mi San Valentín? 💖</h3>
+<div class="card" id="card">
 
-<button onclick="alert('Sabía que dirías que sí ❤️')">💘 SI</button>
+<h2>Briggi Mi Amor ❤️</h2>
+
+<div class="galeria">
+<img src="foto1.jpg" class="activa">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+<img src="foto5.jpg">
+</div>
+
+<p>Hoy quiero hacerte una pregunta muy especial...</p>
+
+<h3>¿Quieres seguir compartiendo esta historia conmigo? 💖</h3>
+
+<div>
+<button onclick="acepto()">💘 SI</button>
+<button id="no" onmouseover="escapar()">😢 NO</button>
+</div>
+
+<div id="mensajeFinal"></div>
 
 </div>
 
 <script>
-function playMusic(){
+
+/* INICIAR */
+
+function iniciar(){
+document.querySelector(".inicio").style.display="none";
+document.getElementById("intro").style.opacity="1";
 document.getElementById("musica").play();
+
+setTimeout(()=>{
+document.getElementById("card").style.opacity="1";
+document.getElementById("card").style.transform="translate(-50%,-50%) scale(1)";
+},5000);
 }
+
+/* GALERÍA */
+
+let fotos = document.querySelectorAll(".galeria img");
+let index = 0;
+
+setInterval(()=>{
+fotos[index].classList.remove("activa");
+index = (index + 1) % fotos.length;
+fotos[index].classList.add("activa");
+},3500);
+
+/* BOTÓN SI */
+
+function acepto(){
+let mensaje = `💖 Mi Briggi hermosa 💖
+
+No tienes idea de lo feliz que me haces cada día que estás a mi lado…
+
+Desde que llegaste a mi vida todo cambió, aprendí lo que es amar de verdad, reír sin razón y sentir que tengo a alguien que vale más que todo en este mundo.
+
+Estos 2 años y 5 meses contigo han sido los más bonitos que he vivido, y cada recuerdo a tu lado es un tesoro que guardo en mi corazón.
+
+Prometo seguir cuidándote, apoyándote y amándote en cada momento, en los días buenos y en los difíciles, porque contigo quiero seguir escribiendo nuestra historia.
+
+Gracias por existir, gracias por elegirme y gracias por dejarme amarte ❤️
+
+Te amo muchísimo 💕`;
+
+let contenedor = document.getElementById("mensajeFinal");
+contenedor.style.opacity="1";
+
+escribirLetra(contenedor, mensaje);
+
+crearCorazones();
+}
+
+/* EFECTO LETRA POR LETRA */
+
+function escribirLetra(elemento, texto, i = 0){
+if(i < texto.length){
+elemento.innerHTML += texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
+setTimeout(()=> escribirLetra(elemento,texto,i+1),35);
+}
+}
+
+/* BOTÓN NO ESCAPA */
+
+function escapar(){
+let btn = document.getElementById("no");
+btn.style.position="absolute";
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+/* LLUVIA DE CORAZONES */
+
+function crearCorazones(){
+for(let i=0;i<40;i++){
+let c = document.createElement("div");
+c.innerHTML="❤️";
+c.className="corazon";
+c.style.left=Math.random()*100+"vw";
+c.style.fontSize=(Math.random()*25+15)+"px";
+c.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(c);
+}
+}
+
 </script>
 
 </body>
