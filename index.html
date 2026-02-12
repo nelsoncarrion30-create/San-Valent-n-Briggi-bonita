@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briggi ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
+}
+
+.card{
+margin-top:30px;
+padding:15px;
+}
+
+img{
+width:90%;
+max-width:350px;
+border-radius:15px;
+margin:10px 0;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ff4d6d;
+color:white;
+font-size:16px;
+margin:10px;
+}
+
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<h2>❤️ Briggi Mi Amor ❤️</h2>
+
+<audio id="musica" loop>
+<source src="./nina_bonita.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+<img src="./foto1.jpg">
+<img src="./foto2.jpg">
+<img src="./foto3.jpg">
+<img src="./foto4.jpg">
+<img src="./foto5.jpg">
+
+<h3>¿Quieres ser mi San Valentín? 💖</h3>
+
+<button onclick="alert('Sabía que dirías que sí ❤️')">💘 SI</button>
+
+</div>
+
+<script>
+function playMusic(){
+document.getElementById("musica").play();
+}
+</script>
+
+</body>
+</html>
